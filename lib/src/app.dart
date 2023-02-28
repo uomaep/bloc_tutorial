@@ -1,6 +1,11 @@
+import 'package:bloc_tutorial/src/bloc/count_bloc.dart';
+import 'package:bloc_tutorial/src/bloc/home.dart';
+import 'package:bloc_tutorial/src/cubit/count_cubit.dart';
+import 'package:bloc_tutorial/src/cubit/home.dart';
 import 'package:bloc_tutorial/src/getx/count_getx_controller.dart';
 import 'package:bloc_tutorial/src/getx/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 class App extends StatelessWidget {
@@ -20,14 +25,39 @@ class App extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-                onPressed: () {
-                  Get.to(GetxHome(), binding: BindingsBuilder(() {
+              onPressed: () {
+                Get.to(
+                  GetxHome(),
+                  binding: BindingsBuilder(() {
                     Get.put(CountGetxController());
-                  }));
+                  }),
+                  duration: Duration.zero,
+                );
+              },
+              child: Text("GetX"),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Get.to(
+                    BlocProvider(
+                      create: (context) => CountCubit(),
+                      child: CubitHome(),
+                    ),
+                    duration: Duration.zero,
+                  );
                 },
-                child: Text("GetX")),
-            ElevatedButton(onPressed: () {}, child: Text("Cublt")),
-            ElevatedButton(onPressed: () {}, child: Text("Bloc")),
+                child: Text("Cublt")),
+            ElevatedButton(
+                onPressed: () {
+                  Get.to(
+                    BlocProvider(
+                      create: (context) => CountBloc(),
+                      child: BlocHome(),
+                    ),
+                    duration: Duration.zero,
+                  );
+                },
+                child: Text("Bloc")),
           ],
         ),
       ),
